@@ -1,3 +1,4 @@
+from fixture.session import SessionHelper
 from selenium.webdriver.remote.webdriver import WebDriver
 
 
@@ -5,25 +6,20 @@ class Application:
     def __init__(self):
         self.wd = WebDriver()
         self.wd.implicitly_wait(60)
+        self.session = SessionHelper(self)
 
-    def login(self, username, password):
+    def open_home_page(self):
         wd = self.wd
-        # open home page
         wd.get("http://localhost/addressbook/")
-        # enter data
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        # auth
-        wd.find_element_by_xpath("//form[@id='LoginForm']/input[3]").click()
+
+    def open_groups_page(self):
+        wd = self.wd
+        wd.find_element_by_link_text("groups").click()
 
     def create_group(self, group):
         wd = self.wd
         # open groups page
-        wd.find_element_by_link_text("groups").click()
+        self.open_groups_page()
         # init group creation
         wd.find_element_by_name("new").click()
         # fill group form
@@ -39,11 +35,11 @@ class Application:
         # submit group creation
         wd.find_element_by_name("submit").click()
         # return to groups page
-        wd.find_element_by_link_text("group page").click()
+        self.return_to_groups_page()
 
-    def logout(self):
+    def return_to_groups_page(self):
         wd = self.wd
-        wd.find_element_by_link_text("Logout").click()
+        wd.find_element_by_link_text("group page").click()
 
     def destroy(self):
         self.wd.quit()
