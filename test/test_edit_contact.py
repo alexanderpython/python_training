@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
+from random import randrange
 
 
-def test_edit_first_contact(app):
+def test_edit_some_contact(app):
     if app.contact.count() == 0:
         app.contact.create(Contact(firstname="test", lastname="test", address="test", telephone="test", email="test"))
     old_contacts = app.contact.get_contact_list()
+    index = randrange(len(old_contacts))
     contact = Contact(firstname="test_firstname_new", lastname="test_lastname_new",
             address="test_address_new", telephone="test_telephone_new",
             email="test_email_new")
-    app.contact.edit_first_contact(contact)
+    app.contact.edit_contact_by_index(index, contact)
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
-    old_contacts[0] = contact
+    old_contacts[index] = contact
     assert sorted(old_contacts, key=Contact.email) == sorted(new_contacts, key=Contact.email)
