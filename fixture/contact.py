@@ -32,6 +32,7 @@ class ContactHelper:
         wd.find_element_by_name("email").send_keys(contact.email)
         wd.find_element_by_name("submit").click()
         self.return_to_contacts_page()
+        self.contact_cache = None
 
     def delete_first_contact(self):
         wd = self.app.wd
@@ -39,6 +40,7 @@ class ContactHelper:
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
+        self.contact_cache = None
 
     def edit_first_contact(self, contact):
         wd = self.app.wd
@@ -61,6 +63,7 @@ class ContactHelper:
         wd.find_element_by_name("email").send_keys(contact.email)
         wd.find_element_by_name("update").click()
         self.return_to_contacts_page()
+        self.contact_cache = None
 
     def return_to_contacts_page(self):
         wd = self.app.wd
@@ -71,11 +74,15 @@ class ContactHelper:
         self.open_new_contact_page()
         return len(wd.find_elements_by_name("selected[]"))
 
+    contact_cache = None
+
     def get_contact_list(self):
-        wd = self.app.wd
-        self.open_new_contact_page()
-        contacts = []
-        for element in wd.find_elements_by_name("entry"):
-            email = element.find_element_by_name("selected[]").get_attribute("accept")
-            contacts.append(Contact(email=email))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_new_contact_page()
+            contacts = []
+            for element in wd.find_elements_by_name("entry"):
+                email = element.find_element_by_name("selected[]").get_attribute("accept")
+                contacts.append(Contact(email=email))
+            return contacts
+        else: list(self.contact_cache)
