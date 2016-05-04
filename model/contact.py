@@ -1,6 +1,3 @@
-from sys import maxsize
-
-
 class Contact:
 
     def __init__(self, firstname=None, lastname=None, address=None, telephone=None, email=None):
@@ -11,7 +8,7 @@ class Contact:
         self.email = email
 
     def __repr__(self):
-        return "%s" % self.email
+        return "%s:%s:%s:%s:%s" % (self.firstname, self.lastname, self.address, self.telephone, self.email)
 
     def __eq__(self, other):
         return self.email == other.email
