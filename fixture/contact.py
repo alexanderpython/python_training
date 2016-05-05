@@ -88,7 +88,24 @@ class ContactHelper:
             self.open_new_contact_page()
             contacts = []
             for element in wd.find_elements_by_name("entry"):
+                cells = element.find_elements_by_tag_name("td")
+                firstname = cells[1].text
+                lastname = cells[2].text
+                address = cells[3].text
+                telephone = cells[5].text
                 email = element.find_element_by_name("selected[]").get_attribute("accept")
-                contacts.append(Contact(email=email))
+                contacts.append(Contact(firstname=firstname, lastname=lastname, address=address,
+                                        telephone=telephone, email=email))
             return contacts
         else: list(self.contact_cache)
+
+    def get_contact_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.open_new_contact_page()
+        wd.find_element_by_xpath("//tr[%d]/td[8]/a/img" % (int(index)+2)).click()
+        firstname = wd.find_element_by_name("firstname").get_attribute("value")
+        lastname = wd.find_element_by_name("lastname").get_attribute("value")
+        address = wd.find_element_by_name("address").get_attribute("value")
+        telephone = wd.find_element_by_name("home").get_attribute("value")
+        email = wd.find_element_by_name("email").get_attribute("value")
+        return Contact(firstname=firstname, lastname=lastname, address=address, telephone=telephone, email=email)
