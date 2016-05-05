@@ -89,13 +89,14 @@ class ContactHelper:
             contacts = []
             for element in wd.find_elements_by_name("entry"):
                 cells = element.find_elements_by_tag_name("td")
-                firstname = cells[1].text
-                lastname = cells[2].text
+                lastname = cells[1].text
+                firstname = cells[2].text
                 address = cells[3].text
+                email = cells[4].text
                 telephone = cells[5].text
-                email = element.find_element_by_name("selected[]").get_attribute("accept")
+                id = cells[0].find_element_by_tag_name("input").get_attribute("value")
                 contacts.append(Contact(firstname=firstname, lastname=lastname, address=address,
-                                        telephone=telephone, email=email))
+                                        telephone=telephone, email=email, id=id))
             return contacts
         else: list(self.contact_cache)
 
