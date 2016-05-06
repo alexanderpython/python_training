@@ -79,10 +79,9 @@ class GroupHelper:
         if self.group_cache is None:
             wd = self.app.wd
             self.open_groups_page()
-            groups = []
+            self.group_cache = []
             for element in wd.find_elements_by_css_selector("span.group"):
                 text = element.text
                 id = element.find_element_by_name("selected[]").get_attribute("value")
-                groups.append(Group(name=text, id=id))
-            return groups
-        else: list(self.group_cache)
+                self.group_cache.append(Group(name=text, id=id))
+        return list(self.group_cache)

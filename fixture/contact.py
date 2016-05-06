@@ -36,6 +36,7 @@ class ContactHelper:
 
     def delete_first_contact(self):
         self.delete_contact_by_index(0)
+        self.contact_cache = None
 
     def delete_contact_by_index(self, index):
         wd = self.app.wd
@@ -47,6 +48,7 @@ class ContactHelper:
 
     def edit_first_contact(self, contact):
         self.edit_contact_by_index(0, contact)
+        self.contact_cache = None
 
     def edit_contact_by_index(self, index, contact):
         wd = self.app.wd
@@ -86,7 +88,7 @@ class ContactHelper:
         if self.contact_cache is None:
             wd = self.app.wd
             self.open_new_contact_page()
-            contacts = []
+            self.contact_cache = []
             for element in wd.find_elements_by_name("entry"):
                 cells = element.find_elements_by_tag_name("td")
                 lastname = cells[1].text
@@ -95,18 +97,17 @@ class ContactHelper:
                 email = cells[4].text
                 telephone = cells[5].text
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
-                contacts.append(Contact(firstname=firstname, lastname=lastname, address=address,
-                                        telephone=telephone, email=email, id=id))
-            return contacts
-        else: list(self.contact_cache)
+                self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, address=address, email=email,
+                                        telephone=telephone, id=id))
+        return list(self.contact_cache)
 
     def get_contact_info_from_edit_page(self, index):
         wd = self.app.wd
         self.open_new_contact_page()
         wd.find_element_by_xpath("//tr[%d]/td[8]/a/img" % (int(index)+2)).click()
-        firstname = wd.find_element_by_name("firstname").get_attribute("value")
         lastname = wd.find_element_by_name("lastname").get_attribute("value")
+        firstname = wd.find_element_by_name("firstname").get_attribute("value")
         address = wd.find_element_by_name("address").get_attribute("value")
-        telephone = wd.find_element_by_name("home").get_attribute("value")
         email = wd.find_element_by_name("email").get_attribute("value")
-        return Contact(firstname=firstname, lastname=lastname, address=address, telephone=telephone, email=email)
+        telephone = wd.find_element_by_name("home").get_attribute("value")
+        return Contact(lastname=lastname, firstname=firstname, address=address, email=email, telephone=telephone)
