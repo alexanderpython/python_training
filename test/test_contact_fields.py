@@ -10,7 +10,7 @@ def test_fields_on_home_page(app):
     assert contact_from_home_page.all_phones == merge_phones(contact_from_edit_page)
 
 def clear(s):
-    return re.sub("[() -]]", "", s)
+    return re.sub("[() -]", "", s)
 
 def merge_phones(contact):
     return "\n".join(filter(lambda x: x != "",
