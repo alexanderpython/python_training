@@ -1,16 +1,23 @@
 import re
+from model.contact import Contact
 
-def test_fields_on_home_page(app):
-    contact_from_home_page = app.contact.get_contact_list()[0]
-    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
-    assert contact_from_home_page.lastname == clear(contact_from_edit_page.lastname)
-    assert contact_from_home_page.firstname == clear(contact_from_edit_page.firstname)
-    assert contact_from_home_page.address == clear(contact_from_edit_page.address)
-    assert contact_from_home_page.all_emails == merge_emails(contact_from_edit_page)
-    assert contact_from_home_page.all_phones == merge_phones(contact_from_edit_page)
+
+def test_fields_on_home_page(app, db):
+    contact_from_home_page = sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
+    contact_from_database = sorted(db.get_detail_contact_list(), key=Contact.id_or_max)
+    assert_lists(contact_from_home_page, contact_from_database)
+
+def assert_lists(list1, list2):
+    if len(list1) == len(list2):
+        for i in range(len(list1)):
+            assert list1[i].lastname == list2[i].lastname
+            assert list1[i].firstname == list2[i].firstname
+            assert list1[i].address == list2[i].address
+            assert list1[i].all_emails == merge_emails(list2[i])
+            assert list1[i].all_phones == merge_phones(list2[i])
 
 def clear(s):
-    return re.sub("[() -]", "", s)
+    return re.sub("[() -]]", "", s)
 
 def merge_phones(contact):
     return "\n".join(filter(lambda x: x != "",
