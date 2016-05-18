@@ -6,6 +6,7 @@ import importlib
 import pytest
 from fixture.application import Application
 from fixture.db import DbFixture
+from fixture.orm import ORMFixture
 
 fixture = None
 target = None
@@ -37,6 +38,12 @@ def db(request):
     request.addfinalizer(fin)
     return dbfixture
 
+@pytest.fixture
+def orm(request):
+    orm_config = load_config(request.config.getoption("--target"))['orm']
+    ormfixture = ORMFixture(host=orm_config['host'], name=orm_config['name'], user=orm_config['user'], password=orm_config['password'])
+    return ormfixture
+
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
     def fin():
@@ -57,7 +64,7 @@ def pytest_addoption(parser):
 def pytest_generate_tests(metafunc):
     for fixture in metafunc.fixturenames:
         if fixture.startswith("data_"):
-            testdata = load_from_module(fixture[5:])
+            testdata = load_from_json(fixture[5:])
             metafunc.parametrize(fixture, testdata, ids=[str(x) for x in testdata])
 
 def load_from_module(module):
