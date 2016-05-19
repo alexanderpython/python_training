@@ -1,0 +1,74 @@
+Started by user [8mha:AAAAlh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzOEgYu/dLi1CL9vNKcHACFIKlWvwAAAA==[0manonymous
+Building in workspace C:\Users\User\.jenkins\jobs\addressbook_tests\workspace
+ > git.exe rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git.exe config remote.origin.url https://github.com/alexanderpython/python_training # timeout=10
+Fetching upstream changes from https://github.com/alexanderpython/python_training
+ > git.exe --version # timeout=10
+ > git.exe -c core.askpass=true fetch --tags --progress https://github.com/alexanderpython/python_training +refs/heads/*:refs/remotes/origin/*
+ > git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+ > git.exe rev-parse "refs/remotes/origin/origin/master^{commit}" # timeout=10
+Checking out Revision 2db943f2984fe5df84084c6189ceb5e170c5ffe8 (refs/remotes/origin/master)
+ > git.exe config core.sparsecheckout # timeout=10
+ > git.exe checkout -f 2db943f2984fe5df84084c6189ceb5e170c5ffe8
+ > git.exe rev-list 2db943f2984fe5df84084c6189ceb5e170c5ffe8 # timeout=10
+[workspace] $ cmd.exe /c call C:\Users\User\AppData\Local\Temp\shiningpanda6765664902883733247.bat
+
+C:\Users\User\.jenkins\jobs\addressbook_tests\workspace>pip install -r requirements.txt 
+Collecting pytest (from -r requirements.txt (line 1))
+  Using cached pytest-2.9.1-py2.py3-none-any.whl
+Collecting pytest-bdd (from -r requirements.txt (line 2))
+  Using cached pytest-bdd-2.16.1.tar.gz
+Collecting selenium (from -r requirements.txt (line 3))
+  Using cached selenium-2.53.2-py2.py3-none-any.whl
+Collecting jsonpickle (from -r requirements.txt (line 4))
+Collecting pony (from -r requirements.txt (line 5))
+Collecting pymysql (from -r requirements.txt (line 6))
+  Using cached PyMySQL-0.7.2-py2.py3-none-any.whl
+Requirement already satisfied (use --upgrade to upgrade): mysql-connector-python in c:\users\user\.jenkins\shiningpanda\jobs\22901e47\virtualenvs\d41d8cd9\lib\site-packages (from -r requirements.txt (line 8))
+Collecting py>=1.4.29 (from pytest->-r requirements.txt (line 1))
+  Using cached py-1.4.31-py2.py3-none-any.whl
+Collecting colorama (from pytest->-r requirements.txt (line 1))
+  Using cached colorama-0.3.7-py2.py3-none-any.whl
+Collecting glob2 (from pytest-bdd->-r requirements.txt (line 2))
+  Downloading glob2-0.4.1.tar.gz
+Collecting Mako (from pytest-bdd->-r requirements.txt (line 2))
+  Downloading Mako-1.0.4.tar.gz (574kB)
+Collecting parse (from pytest-bdd->-r requirements.txt (line 2))
+  Downloading parse-1.6.6-py3-none-any.whl
+Collecting parse-type (from pytest-bdd->-r requirements.txt (line 2))
+  Downloading parse_type-0.3.4.tar.gz (62kB)
+Collecting six>=1.9.0 (from pytest-bdd->-r requirements.txt (line 2))
+  Downloading six-1.10.0-py2.py3-none-any.whl
+Collecting MarkupSafe>=0.9.2 (from Mako->pytest-bdd->-r requirements.txt (line 2))
+  Downloading MarkupSafe-0.23.tar.gz
+Building wheels for collected packages: pytest-bdd, glob2, Mako, parse-type, MarkupSafe
+  Running setup.py bdist_wheel for pytest-bdd
+  Stored in directory: C:\Users\User\AppData\Local\pip\Cache\wheels\44\ab\d0\f9fc89a5da778184e52a48131f416def057ebd6103adbbfe1f
+  Running setup.py bdist_wheel for glob2
+  Stored in directory: C:\Users\User\AppData\Local\pip\Cache\wheels\25\5e\d1\742f1a34931b3353d26688b43dfdc017b0d853fe910ef6bae8
+  Running setup.py bdist_wheel for Mako
+  Stored in directory: C:\Users\User\AppData\Local\pip\Cache\wheels\2a\fa\9a\7030d96d3c51f433848e4cd67a353a411ba6deb5c14e150730
+  Running setup.py bdist_wheel for parse-type
+  Stored in directory: C:\Users\User\AppData\Local\pip\Cache\wheels\4e\5c\2b\69e1676d9fbf9328e8d7a12c3a329b1ddced9a020cdbf11e10
+  Running setup.py bdist_wheel for MarkupSafe
+  Stored in directory: C:\Users\User\AppData\Local\pip\Cache\wheels\a3\fa\dc\0198eed9ad95489b8a4f45d14dd5d2aee3f8984e46862c5748
+Successfully built pytest-bdd glob2 Mako parse-type MarkupSafe
+Installing collected packages: py, colorama, pytest, glob2, MarkupSafe, Mako, parse, six, parse-type, pytest-bdd, selenium, jsonpickle, pony, pymysql
+Successfully installed Mako-1.0.4 MarkupSafe-0.23 colorama-0.3.7 glob2-0.4.1 jsonpickle-0.9.3 parse-1.6.6 parse-type-0.3.4 pony-0.6.5 py-1.4.31 pymysql-0.7.2 pytest-2.9.1 pytest-bdd-2.16.1 selenium-2.53.2 six-1.10.0
+You are using pip version 7.1.2, however version 8.1.2 is available.
+You should consider upgrading via the 'python -m pip install --upgrade pip' command.
+
+C:\Users\User\.jenkins\jobs\addressbook_tests\workspace>py.test test\test_add_group.py 
+============================= test session starts =============================
+platform win32 -- Python 3.5.1, pytest-2.9.1, py-1.4.31, pluggy-0.3.1
+rootdir: C:\Users\User\.jenkins\jobs\addressbook_tests\workspace\test, inifile: 
+plugins: bdd-2.16.1
+collected 6 items
+
+test\test_add_group.py ......
+
+========================== 6 passed in 10.99 seconds ==========================
+
+C:\Users\User\.jenkins\jobs\addressbook_tests\workspace>exit 0 
+Finished: SUCCESS
